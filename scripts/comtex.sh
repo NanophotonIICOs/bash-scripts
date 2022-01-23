@@ -26,6 +26,8 @@ while getopts "bs:" option;do
         *)  
             usage
             exit;;
+
+            
     esac
 done
 
