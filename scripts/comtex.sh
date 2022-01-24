@@ -2,13 +2,20 @@
 dir=$(pwd)
 cd $dir
 
-usage()
+simple_compile()
 {
-    echo "You select simple option compile"
     pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
 }
 
-while getopts "bs:" option;do
+if [ $# -eq 0 ]; then
+    simple_compile # run usage function
+    exit 1
+fi
+
+green=$(tput setaf 2)            
+
+while getopts "bs" option
+do
     case $option in 
         b)
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex &&
@@ -18,16 +25,15 @@ while getopts "bs:" option;do
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
             ;;
         s)
-            echo -e "You select Makeindex option compile\n\n"
+            echo -e "\t\t\t\n\nYou select Makeindex option compile\n\n"
+            pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex &&
+            makeglossaries -s out-ruco/*.ist -t out-ruco/*.glg -o out-ruco/*.gls out-ruco/*.glo&&
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
-            makeglossaries  -s  out-ruco/*.ist -t out-ruco/*.glg -o out-ruco/*.gls out-ruco/*.glo
-            pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
+            echo -e "\n\n\t\t\t\t\t${green}Finish\n\n"
             ;;
         *)  
-            usage
+            simple_compile
             exit;;
-
-            
     esac
 done
 
