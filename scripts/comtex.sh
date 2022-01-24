@@ -29,7 +29,7 @@ do
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex &&
             makeglossaries -s out-ruco/*.ist -t out-ruco/*.glg -o out-ruco/*.gls out-ruco/*.glo&&
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
-            echo -e "\n\n\t\t\t\t\t${green}Finish\n\n"
+            echo -e "\n\n\t\t\t\t${green}Finish\n\n"
             ;;
         *)  
             simple_compile
