@@ -14,7 +14,7 @@ fi
 
 green=$(tput setaf 2)            
 
-while getopts "bs" option
+while getopts "bs:f:" option
 do
     case $option in 
         b)
@@ -30,6 +30,11 @@ do
             makeglossaries -s out-ruco/*.ist -t out-ruco/*.glg -o out-ruco/*.gls out-ruco/*.glo&&
             pdflatex -synctex=1 -interaction=nonstopmode -output-directory=out-ruco *.tex
             echo -e "\n\n\t\t\t\t${green}Finish\n\n"
+            ;;
+        f) 
+            echo -e "\n\n\t\t compile figure from eps\n\n"
+            pdflatex -synctex=1 -shell-escape -output-directory=out-ruco $OPTARG
+            #convert out-ruco/$OPTARG.pdf -fuzz 10% -transparent White out-ruco/$OPTARG.pdf
             ;;
         *)  
             simple_compile
