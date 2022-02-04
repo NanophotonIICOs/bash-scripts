@@ -2,6 +2,14 @@
 dir=$(pwd)
 cd $dir
 
+
+#check if exists tex file
+if [ -e *.tex ]; then
+  echo "Exists TeX files"
+else
+  echo "Doesn't exist Tex files"
+  exit 0
+fi
 # first check if out dir exists
 if [ -d "${dir}/out" ] 
 then
