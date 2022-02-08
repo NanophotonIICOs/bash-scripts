@@ -38,30 +38,34 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-while getopts "bs:f:" option
+while getopts "bsf:" option
 do
     case $option in 
         b)
-            pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
-            echo -e "$lcyan \n\n\n\n\t\t\t Compile BIB \n\n\n\n"
-            bibtex out/*.aux &&
-            echo -e "\n\n\n"
-            pdflatex -shell-escape -file-line-error -output-directory=out *.tex
-            ;;
+        echo "$red";
+        pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
+        echo "$lcyan";
+        bibtex out/*.aux &&
+        echo "$yellow";
+        pdflatex -shell-escape -file-line-error -output-directory=out *.tex&&
+        echo -e "$green";
+        pdflatex -shell-escape -file-line-error -output-directory=out *.tex
+        ;;
         s)
-            echo -e "$lcyan \t\t\t\n\nYou select Makeindex option compile\n\n"
-            pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
-            makeglossaries -s out/*.ist -t out/*.glg -o out/*.gls out/*.glo&&
-            pdflatex -shell-escape -file-line-error -output-directory=out *.tex
-            echo -e "$lcyan \n\n\t\t\t\t${green}Finish\n\n"
-            ;;
+        echo -e "$red"
+        pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
+        echo -e "$yellow"
+        makeglossaries -s out/*.ist -t out/*.glg -o out/*.gls out/*.glo &&
+        echo -e "$green"
+        pdflatex -shell-escape -file-line-error -output-directory=out *.tex
+        ;;
         f) 
-            echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
-            pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
-            ;;
+        echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
+        pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+        ;;
         *)  
-            echo "You can select any option"
-            exit;;
+        echo "You can select any option"
+        exit;;
     esac
 done
 
