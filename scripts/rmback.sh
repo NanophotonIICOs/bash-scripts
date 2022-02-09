@@ -26,6 +26,8 @@ do
     if [[ "$file" =~  .*"$1".* ]]; then
         convert $file -fuzz %$percent -transparent $background "${file%.*}-out.pdf"
         echo "$green $file ---> ${file%.*}-out.pdf"
+    else
+        echo "$red This word $yellow $1 $red isn't in file: $file"
     fi
 done
 
