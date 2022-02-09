@@ -22,7 +22,7 @@ done
 # first check if out dir exists
 if [ -d "${dir}/out" ] 
 then
-    echo "$green Directory ${dir}/out exists.$yellow" 
+    echo "$lcyan Directory ${dir}/out exists.$yellow" 
 else
     echo "$lcyan Should be create out dir"&&
     mkdir out
