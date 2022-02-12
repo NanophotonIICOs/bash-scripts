@@ -38,7 +38,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-while getopts "bsf:" option
+while getopts "bsf:x" option
 do
     case $option in 
         b)
@@ -62,6 +62,9 @@ do
         f) 
         echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
         pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+        ;;
+        x) 
+        xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
         ;;
         *)  
         echo "You can select any option"
