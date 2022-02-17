@@ -8,6 +8,18 @@ blue=$'\e[0;34m'
 lcyan=$'\e[1;36m'
 yellow=$'\e[1;33m'
 
+
+
+if [ -f "${file}" ]; then
+    echo "Exists TeX files";
+    break
+else
+    echo "Doesn't exist Tex files"
+    exit 0 
+fi
+
+
+
 if [ ! $2 ] && [ ! $3 ]
     then
         background=white;
