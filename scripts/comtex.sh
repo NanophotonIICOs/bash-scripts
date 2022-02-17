@@ -11,10 +11,10 @@ yellow=$'\e[1;33m'
 for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
-    echo "Exists TeX files";
+    echo "$green Exists TeX files";
     break
   else
-    echo "Doesn't exist Tex files"
+    echo "$red Doesn't exist Tex files"
     exit 0 
   fi
 done
