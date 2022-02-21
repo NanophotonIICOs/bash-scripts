@@ -38,7 +38,23 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-while getopts "bsf:x" option
+
+#function to reduce size of pdf
+reduce_size()
+{
+  for FILE in out/*.pdf
+    do
+    if [[ "rs" =~  .*"$FILE".* ]]; then
+      echo -e "$green $FILE already reduce!"
+    else
+      echo -e "$red Reduce: $FILE"
+      gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${FILE%.*}-rs.pdf"  $FILE
+    fi
+  done 
+}
+
+
+while getopts "bsrf:x" option
 do
     case $option in 
         b)
@@ -66,6 +82,9 @@ do
         x) 
         xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
         ;;
+        r)
+        reduce_size
+        ;;
         *)  
         echo "You can select any option"
         exit;;
@@ -74,4 +93,4 @@ done
 
 
 
-            
+#  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=phd.pdf  2021-ruco-phd-thesis.pdf
