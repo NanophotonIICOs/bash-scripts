@@ -42,13 +42,18 @@ fi
 #function to reduce size of pdf
 reduce_size()
 {
-  for FILE in out/*.pdf
+  dir=$(pwd)
+  cd "$dir/out"
+  day=$(date +"%Y-%m-%d")
+  for FILE in *.pdf
     do
-    if [[ "rs" =~  .*"$FILE".* ]]; then
+    if [[ "$1" =~  .*"$FILE".* ]]; then
       echo -e "$green $FILE already reduce!"
     else
       echo -e "$red Reduce: $FILE"
-      gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${FILE%.*}-rs.pdf"  $FILE
+      gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${FILE%.*}-$day.pdf"  $FILE
+      echo -e "$green Finish!"
+      cp "${FILE%.*}-$day.pdf" "../../$FILE"
     fi
   done 
 }
@@ -91,6 +96,3 @@ do
     esac
 done
 
-
-
-#  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=phd.pdf  2021-ruco-phd-thesis.pdf
