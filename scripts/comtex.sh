@@ -59,7 +59,7 @@ reduce_size()
 }
 
 
-while getopts "bsrf:x" option
+while getopts "bsrf:xt:" option
 do
     case $option in 
         b)
@@ -81,6 +81,10 @@ do
         pdflatex -shell-escape -file-line-error -output-directory=out *.tex
         ;;
         f) 
+        echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
+        pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+        ;;
+        t) 
         echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
         pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
         ;;
