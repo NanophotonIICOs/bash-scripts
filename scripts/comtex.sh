@@ -28,15 +28,46 @@ else
     mkdir out
 fi
 
+
+# compile functions 
+
 simple_compile()
 {
     pdflatex -shell-escape -file-line-error -output-directory=out *.tex
 }
 
-if [ $# -eq 0 ]; then
-    simple_compile # run usage function
-    exit 1
-fi
+compile_figure()
+{
+  echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
+  pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+}
+
+compile_with_index()
+{
+  echo -e "$red"
+  pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
+  echo -e "$yellow"
+  makeglossaries -s out/*.ist -t out/*.glg -o out/*.gls out/*.glo &&
+  echo -e "$green"
+  pdflatex -shell-escape -file-line-error -output-directory=out *.tex
+}
+
+compile_with_bib()
+{
+  echo "$red";
+  pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
+  echo "$lcyan";
+  bibtex out/*.aux &&
+  echo "$yellow";
+  pdflatex -shell-escape -file-line-error -output-directory=out *.tex&&
+  echo -e "$green";
+  pdflatex -shell-escape -file-line-error -output-directory=out *.tex
+}
+
+compile_with_xetex()
+{
+  xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
+}
 
 
 #function to reduce size of pdf
@@ -58,45 +89,50 @@ reduce_size()
   done 
 }
 
+clean_aux()
+{
+  dir=$(pwd)
+  cd "$dir/out" 
+  for auxfiles in * 
+  do
+    if [[ $auxfiles != *.pdf ]]; then
+      echo -e "Delete:$auxfiles"
+      rm -R $auxfiles
+    fi
+  done 
+}
 
-while getopts "bsrf:xt:" option
-do
-    case $option in 
-        b)
-        echo "$red";
-        pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
-        echo "$lcyan";
-        bibtex out/*.aux &&
-        echo "$yellow";
-        pdflatex -shell-escape -file-line-error -output-directory=out *.tex&&
-        echo -e "$green";
-        pdflatex -shell-escape -file-line-error -output-directory=out *.tex
-        ;;
-        s)
-        echo -e "$red"
-        pdflatex -shell-escape -file-line-error -output-directory=out *.tex &&
-        echo -e "$yellow"
-        makeglossaries -s out/*.ist -t out/*.glg -o out/*.gls out/*.glo &&
-        echo -e "$green"
-        pdflatex -shell-escape -file-line-error -output-directory=out *.tex
-        ;;
-        f) 
-        echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
-        pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
-        ;;
-        t) 
-        echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
-        pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
-        ;;
-        x) 
-        xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
-        ;;
-        r)
-        reduce_size
-        ;;
-        *)  
-        echo "You can select any option"
-        exit;;
-    esac
-done
 
+
+if [ $# -eq 0 ]; then
+    simple_compile # run usage function
+    exit 1
+else
+    while getopts "bsrf:xt:c" option
+    do
+        case $option in 
+            b)
+            compile_with_bib
+            ;;
+            s)
+            compile_with_index
+            ;;
+            f) 
+            compile_figure
+            ;;
+            x) 
+            compile_with_xetex
+            ;;
+            r)
+            reduce_size
+            ;;
+            c)
+            clean_aux
+            ;;
+            *)  
+            echo "You can select any option"
+            exit;;
+        esac
+    done
+
+fi
