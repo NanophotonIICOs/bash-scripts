@@ -38,8 +38,14 @@ simple_compile()
 
 compile_figure()
 {
-  echo -e "$lcyan \n\n\t\t compile figure from eps\n\n"
-  pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+    echo -e "$lcyan \n\n\t\t compile figure from \n\n"
+    pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+}
+
+compile_figure_robust()
+{
+  echo -e "$lcyan \n\n\t\t compile figure with lualatex \n\n"
+  lualatex -shell-escape -file-line-error -output-directory=out $OPTARG
 }
 
 compile_with_index()
@@ -108,7 +114,7 @@ if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "bsrf:xt:c" option
+    while getopts "bsrf:xt:cl:" option
     do
         case $option in 
             b)
@@ -128,6 +134,9 @@ else
             ;;
             c)
             clean_aux
+            ;;
+            l) 
+            compile_figure_robust
             ;;
             *)  
             echo "You can select any option"
