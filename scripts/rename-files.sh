@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 # now it's important to define scripts path
 python /media/labfiles/ruco/repos/bash-scripts/scripts/renamef.py  >> files.txt
 filename=files.txt
