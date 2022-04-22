@@ -40,6 +40,7 @@ compile_figure()
 {
     echo -e "$lcyan \n\n\t\t compile figure from \n\n"
     pdflatex -shell-escape -file-line-error -output-directory=out $OPTARG
+  
 }
 
 compile_figure_robust()
@@ -112,6 +113,7 @@ clean_aux()
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
+    clean_aux
     exit 1
 else
     while getopts "bsrf:xt:cl:" option
@@ -119,26 +121,33 @@ else
         case $option in 
             b)
             compile_with_bib
+            clean_aux
             ;;
             s)
             compile_with_index
+            clean_aux
             ;;
             f) 
             compile_figure
+            clean_aux
             ;;
             x) 
             compile_with_xetex
+            clean_aux
             ;;
             r)
             reduce_size
+            clean_aux
             ;;
             c)
             clean_aux
             ;;
             l) 
             compile_figure_robust
+            clean_aux
             ;;
             *)  
+            clean_aux
             echo "You can select any option"
             exit;;
         esac
