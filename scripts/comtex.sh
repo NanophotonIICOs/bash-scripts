@@ -110,15 +110,20 @@ clean_aux()
 }
 
 
+# after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
+
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
     clean_aux
     exit 1
 else
-    while getopts "bsrf:xt:cl:" option
+    while getopts "absrf:xt:cl:" option
     do
         case $option in 
+            a)
+            simple_compile 
+            ;;
             b)
             compile_with_bib
             clean_aux
