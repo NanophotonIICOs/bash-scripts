@@ -54,8 +54,10 @@ compile_all()
 
 compile_option()
 {
+  scripts_path=$scripts_root
+  program="/choice-TeX-file.py"
   echo "$green This TeX files are availables in this directory"
-  python  /media/labfiles/ruco/repos/bash-scripts/scripts/choice-TeX-file.py $dir
+  python $scripts_path$program $dir
 
 }
 
