@@ -1,4 +1,7 @@
 #!/bin/bash
+#!/bin/python
+
+script-path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
@@ -6,12 +9,13 @@ red=$'\e[0;31m'
 blue=$'\e[0;34m'
 lcyan=$'\e[1;36m'
 yellow=$'\e[1;33m'
+endcolor=$'\e[0m'
 
 #check if exists tex file
 for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
-    echo "$green Exists TeX files";
+    echo "$green Exists TeX files :)";
     break
   else
     echo "$red Doesn't exist Tex files"
@@ -28,12 +32,31 @@ else
     mkdir out
 fi
 
-
 # compile functions 
-
 simple_compile()
 {
     pdflatex -shell-escape -file-line-error -output-directory=out *.tex
+}
+
+compile_all()
+{
+  for file in *.tex
+    do
+    echo "$file"
+    pdflatex -shell-escape -file-line-error -output-directory=out $file
+    echo "$lcyan";
+    bibtex out/*.aux 
+    pdflatex -shell-escape -file-line-error -output-directory=out $file
+    pdflatex -shell-escape -file-line-error -output-directory=out $file
+  
+  done
+}
+
+compile_option()
+{
+  echo "$green This TeX files are availables in this directory"
+  python  /media/labfiles/ruco/repos/bash-scripts/scripts/choice-TeX-file.py $dir
+
 }
 
 compile_figure()
@@ -76,6 +99,14 @@ compile_with_xetex()
   xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
 }
 
+compile_revtex()
+{
+  pdflatex -shell-escape -file-line-error *.tex
+  bibtex  *.tex
+  pdflatex -shell-escape -file-line-error *.tex
+}
+
+
 
 #function to reduce size of pdf
 reduce_size()
@@ -115,44 +146,42 @@ clean_aux()
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
-    clean_aux
     exit 1
 else
-    while getopts "absrf:xt:cl:" option
+    while getopts "anbsrf:x:t:cl:o" option
     do
         case $option in 
             a)
             simple_compile 
             ;;
+            n)
+            compile_all
+            ;;
             b)
             compile_with_bib
-            clean_aux
             ;;
             s)
             compile_with_index
-            clean_aux
             ;;
             f) 
             compile_figure
-            clean_aux
             ;;
             x) 
             compile_with_xetex
-            clean_aux
             ;;
             r)
-            reduce_size
-            clean_aux
+            compile_revtex
             ;;
             c)
             clean_aux
             ;;
             l) 
             compile_figure_robust
-            clean_aux
+            ;;
+            o) 
+            compile_option
             ;;
             *)  
-            clean_aux
             echo "You can select any option"
             exit;;
         esac
