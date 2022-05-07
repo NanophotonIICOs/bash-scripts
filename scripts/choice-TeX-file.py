@@ -11,7 +11,7 @@ for i in os.listdir(path):
         print(" %d --->  %s"%(count,i))
         listfiles.append(i)
         count+=1
-file = input("Select TeX file to compile: ")
+file = input("Select TeX file to compile (number): ")
 
 for i,j in enumerate(listfiles):
     if i==int(file):
