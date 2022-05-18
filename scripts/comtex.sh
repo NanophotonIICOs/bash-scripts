@@ -1,7 +1,6 @@
 #!/bin/bash
 #!/bin/python
-
-script-path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
@@ -101,6 +100,8 @@ compile_with_xetex()
   xelatex -shell-escape -file-line-error -output-directory=out $OPTARG
 }
 
+
+
 compile_revtex()
 {
   pdflatex -shell-escape -file-line-error *.tex
@@ -113,20 +114,10 @@ compile_revtex()
 #function to reduce size of pdf
 reduce_size()
 {
-  dir=$(pwd)
+  program="reduce-pdf.py"
   cd "$dir/out"
-  day=$(date +"%Y-%m-%d")
-  for FILE in *.pdf
-    do
-    if [[ "$1" =~  .*"$FILE".* ]]; then
-      echo -e "$green $FILE already reduce!"
-    else
-      echo -e "$red Reduce: $FILE"
-      gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${FILE%.*}-$day.pdf"  $FILE
-      echo -e "$green Finish!"
-      cp "${FILE%.*}-$day.pdf" "../../$FILE"
-    fi
-  done 
+  new_dir=$(pwd)
+  python $scripts_path$program $new_dir
 }
 
 clean_aux()
@@ -150,7 +141,7 @@ if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "anbsrf:x:t:cl:o" option
+    while getopts "anbsrf:x:t:cl:op" option
     do
         case $option in 
             a)
@@ -182,6 +173,9 @@ else
             ;;
             o) 
             compile_option
+            ;;
+            p) 
+            reduce_size
             ;;
             *)  
             echo "You can select any option"
