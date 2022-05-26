@@ -6,7 +6,7 @@ path= (sys.argv[1])
 
 count=0
 listfiles = []
-for i in os.listdir(path):
+for i in sorted(os.listdir(path)):
     if i.endswith('.tex'):
         print(" %d --->  %s"%(count,i))
         listfiles.append(i)
