@@ -21,7 +21,7 @@ for i,j in enumerate(listfiles):
          print("%s-%s.pdf"%(j.split('.')[0],today))
          os.system(
              "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=%s-%s.pdf"%(j.split('.')[0],today))
-         print("Reduce %s ---> %s"%(j,(j.split('.')[0],today)))
+         print("Reduce %s ---> %s"%(j,(j.split('.')[0])))
          os.remove(j)
 
         
