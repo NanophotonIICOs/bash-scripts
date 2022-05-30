@@ -133,9 +133,7 @@ clean_aux()
   done 
 }
 
-
 # after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
-
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
