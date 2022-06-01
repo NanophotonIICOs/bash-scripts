@@ -16,3 +16,5 @@ file = input("Select TeX file to compile (number): ")
 for i,j in enumerate(listfiles):
     if i==int(file):
         os.system("pdflatex -shell-escape -file-line-error -output-directory=out %s"%j)
+        os.system("bibtex out/*.aux %s")
+        os.system("pdflatex -shell-escape -file-line-error -output-directory=out %s"%j)
