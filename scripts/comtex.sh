@@ -10,6 +10,7 @@ lcyan=$'\e[1;36m'
 yellow=$'\e[1;33m'
 endcolor=$'\e[0m'
 
+user=$USER
 #check if exists tex file
 for file in ./*.tex
 do 
@@ -23,12 +24,12 @@ do
 done
 
 # first check if out dir exists
-if [ -d "${dir}/out" ] 
+if [ -d "${dir}/build-$user" ] 
 then
-    echo "$lcyan Directory ${dir}/out exists.$yellow" 
+    echo "$lcyan Directory ${dir}/build-$user exists.$yellow" 
 else
-    echo "$lcyan Should be create out dir"&&
-    mkdir out
+    echo "$lcyan Should be create build-$user dir"&&
+    mkdir build-$user
 fi
 
 # compile functions 
@@ -53,7 +54,6 @@ compile_all()
 
 compile_option()
 {
-  scripts_path=$scripts_root
   program="/choice-TeX-file.py"
   echo "$green This TeX files are availables in this directory"
   python $scripts_path$program $dir
@@ -115,22 +115,18 @@ compile_revtex()
 reduce_size()
 {
   program="reduce-pdf.py"
-  cd "$dir/out"
+  cd "${dir}/build-$user"
   new_dir=$(pwd)
   python $scripts_path$program $new_dir
 }
 
 clean_aux()
 {
+  code="clean.py"
   dir=$(pwd)
-  cd "$dir/out" 
-  for auxfiles in * 
-  do
-    if [[ $auxfiles != *.pdf ]]; then
-      echo -e "Delete:$auxfiles"
-      rm -R $auxfiles
-    fi
-  done 
+  cd "${dir}/build-$user" 
+  new_dir=$(pwd)
+  python $scripts_path$code $new_dir 
 }
 
 # after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
