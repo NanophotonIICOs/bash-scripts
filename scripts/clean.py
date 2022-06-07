@@ -11,7 +11,11 @@ listextensions=[
 '*.fmt',
 '*.fot',
 '*.cb',
+'*.brf',
+'*.mlf',
 '*.cb2',
+'*.ist',
+'*.slo',
 '.*.lb',
 '*.dvi',
 '*.xdv',
@@ -64,6 +68,7 @@ listextensions=[
 '*.slf[0-9]*',
 '*.slt[0-9]*',
 '*.stc[0-9]*',
+'*.mtc',
 '_minted*',
 '*.pyg',
 '*.mw',
@@ -78,7 +83,6 @@ listextensions=[
 '*.wrt',
 '*.sout',
 '*.sympy',
-'sympy-plots-for-*.tex/',
 '*.upa',
 '*.upb',
 '*.pytxcode',
@@ -102,14 +106,22 @@ listextensions=[
 '*.tps',
 './auto/*',
 '*.el',
-'*-tags.tex',
 '*.sta',
 '*.lpz'
 ]
 
 path= (sys.argv[1])
+removedfiles=[]
 for i in os.listdir(path):
     for j in listextensions:
-        if i.split('.')[-1] == j.split('.')[-1]:
+        if j.split('.')[-1] in i:
             print('%s removed by ---> %s extension'%(i,j))
-            os.system("rm -R %s"%i)
+            removedfiles.append(i)
+
+response=input("The above files will be deleted, you're sure? [Y]/n: ")
+if response=="Y" or response=="y":
+    for i in removedfiles:
+        print("Remove %s:"%i)
+        os.system("rm -R %s"%i)
+else:
+    exit
