@@ -3,7 +3,6 @@ import os
 import sys
 
 path= (sys.argv[1])
-
 count=0
 listfiles = []
 for i in sorted(os.listdir(path)):
@@ -13,8 +12,9 @@ for i in sorted(os.listdir(path)):
         count+=1
 file = input("Select TeX file to compile (number): ")
 
+diroutput=(sys.argv[2])
 for i,j in enumerate(listfiles):
     if i==int(file):
-        os.system("pdflatex -shell-escape -file-line-error -output-directory=out %s"%j)
-        os.system("bibtex out/*.aux %s")
-        os.system("pdflatex -shell-escape -file-line-error -output-directory=out %s"%j)
+        os.system("pdflatex -shell-escape -file-line-error -output-directory=%s %s"%(diroutput,j))
+        os.system("bibtex %s/*.aux"%(diroutput))
+        os.system("pdflatex -shell-escape -file-line-error -output-directory=%s %s"%(diroutput,j))
