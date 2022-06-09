@@ -108,7 +108,7 @@ else
             ;;
             *)  
             echo "You can select any option"
-            exit;;
+            exit ;;
         esac
     done
 
