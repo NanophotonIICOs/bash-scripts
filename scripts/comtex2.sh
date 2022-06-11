@@ -37,28 +37,36 @@ fi
 # compile functions 
 simple_compile()
 {
-    latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -outdir=$diroutput -diagnostics
+    latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -outdir=$diroutput 
 }
 
 
 compile_option()
 {
   program="/choice-TeX-file-latexmk.py"
+  type="general"
   echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput
+  python $scripts_path$program $dir $diroutput $type
 
 }
 
 compile_figure()
 {
     echo -e "$lcyan \n\n\t\t compile figure from \n\n"
-    pdflatex -shell-escape -file-line-error -output-directory=$diroutput $OPTARG
+    type="figure"
+    program="/choice-TeX-file-latexmk.py"
+    python $scripts_path$program $dir $diroutput $type
+   
   
 }
 
 compile_with_xetex()
 {
-  xelatex -shell-escape -file-line-error -output-directory=$diroutput $OPTARG
+ echo -e "$lcyan \n\n\t\t compile figure from \n\n"
+    type="xelatex"
+    program="/choice-TeX-file-latexmk.py"
+    python $scripts_path$program $dir $diroutput $type
+   
 }
 
 compile_revtex()
@@ -94,17 +102,23 @@ if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "aoc" option
+    while getopts "aocfx" option
     do
         case $option in 
             a)
             simple_compile 
+            ;;
+            f)
+            compile_figure 
             ;;
             o)
             compile_option 
             ;;
             c)
             clean_aux
+            ;;
+            x)
+            compile_with_xetex
             ;;
             *)  
             echo "You can select any option"
