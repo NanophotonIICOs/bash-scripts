@@ -9,9 +9,7 @@ blue=$'\e[0;34m'
 lcyan=$'\e[1;36m'
 yellow=$'\e[1;33m'
 endcolor=$'\e[0m'
-
 user=$USER
-
 diroutput="build-$USER"
 #check if exists tex file
 for file in ./*.tex
@@ -40,29 +38,35 @@ simple_compile()
     latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -outdir=$diroutput 
 }
 
-
 compile_option()
 {
   program="/choice-TeX-file-latexmk.py"
   type="general"
   echo "$green This TeX files are availables in this directory"
   python $scripts_path$program $dir $diroutput $type
-
 }
 
 compile_figure()
 {
-    echo -e "$lcyan \n\n\t\t compile figure from \n\n"
-    type="figure"
-    program="/choice-TeX-file-latexmk.py"
-    python $scripts_path$program $dir $diroutput $type
-   
+  echo -e "$lcyan \n\n\t\t compile figure from \n"
+  type="figure"
+  program="/choice-TeX-file-latexmk.py"
+  python $scripts_path$program $dir $diroutput $type
+  
+}
+
+compile_lualatex()
+{
+  echo -e "$lcyan \n\n\t\t compile figure from \n"
+  type="lualatex"
+  program="/choice-TeX-file-latexmk.py"
+  python $scripts_path$program $dir $diroutput $type
   
 }
 
 compile_with_xetex()
 {
- echo -e "$lcyan \n\n\t\t compile figure from \n\n"
+ echo -e "$lcyan \n\n\t\t compile figure from \n"
     type="xelatex"
     program="/choice-TeX-file-latexmk.py"
     python $scripts_path$program $dir $diroutput $type
@@ -75,8 +79,6 @@ compile_revtex()
   bibtex  *.tex
   pdflatex -shell-escape -file-line-error *.tex
 }
-
-
 
 #function to reduce size of pdf in build-user dir
 reduce_size()
@@ -102,7 +104,7 @@ if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "aocfx" option
+    while getopts "aoclxpf" option
     do
         case $option in 
             a)
@@ -110,6 +112,9 @@ else
             ;;
             f)
             compile_figure 
+            ;;
+            l)
+            compile_lualatex
             ;;
             o)
             compile_option 
@@ -120,6 +125,9 @@ else
             x)
             compile_with_xetex
             ;;
+            p)
+            reduce_size
+            ;;
             *)  
             echo "You can select any option"
             exit ;;
@@ -127,3 +135,4 @@ else
     done
 
 fi
+
