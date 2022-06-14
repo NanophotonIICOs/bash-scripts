@@ -46,13 +46,13 @@ while(True):
     try:
         cdircomplete=listpaths[int(cdir)]
     except IndexError:
-        print(style.RED+'¡Error! you can input a correct number file! ')
+        print(style.RED+'¡Error! you can input a correct number file! 😡')
         continue
     except ValueError:
-        print(style.RED+'¡Error! you can input a correct number file! ')
+        print(style.RED+'¡Error! you can input a correct number file! 😡')
         continue
     else:
-        print("you select: %s"%(cdircomplete))
+        print("you select: %s 😄"%(cdircomplete))
         break
 
 
