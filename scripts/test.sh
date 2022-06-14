@@ -12,7 +12,8 @@ endcolor=$'\e[0m'
 scripts_path=$scripts_root
 program="/choice-file.py"
 dirname="build-"
-
+user=$USER
+diroutput="build-$USER"
 #check if exists tex file
 for file in ./*.tex
 do 
@@ -26,7 +27,7 @@ do
 done
 
 # first check if build dir exists
-if [ -d "${dir}/${dirname}${USER}" ] 
+if [ -d "${dir}/${dirouput}" ] 
     then
         echo "$green Directory ${dir}/${dirname}${USER} exists.$endcolor" 
     else

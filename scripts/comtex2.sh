@@ -15,10 +15,12 @@ diroutput="build-$USER"
 for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
-    echo "$green Exists TeX files :)";
+    emoji='🗹'
+    echo -e "$green Exists TeX files ${emoji} $endcolor";
     break
   else
-    echo "$red Doesn't exist Tex files"
+  emoji='🗶'
+    echo "$red Doesn't exist Tex files ${emoji} $endcolor"
     exit 0 
   fi
 done
@@ -26,16 +28,18 @@ done
 # first check if $diroutput dir exists
 if [ -d "${dir}/$diroutput" ] 
 then
-    echo "$lcyan Directory ${dir}/$diroutput exists.$yellow" 
+    echo "$lcyan Directory ${dir}/$diroutput exists.${endcolor}" 
 else
     echo "$lcyan Should be create $diroutput dir"&&
     mkdir $diroutput
 fi
 
+
+
 # compile functions 
 simple_compile()
 {
-    latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -outdir=$diroutput 
+    latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -g -outdir=$diroutput 
 }
 
 compile_option()
@@ -61,7 +65,6 @@ compile_lualatex()
   type="lualatex"
   program="/choice-TeX-file-latexmk.py"
   python $scripts_path$program $dir $diroutput $type
-  
 }
 
 compile_with_xetex()
@@ -70,14 +73,14 @@ compile_with_xetex()
     type="xelatex"
     program="/choice-TeX-file-latexmk.py"
     python $scripts_path$program $dir $diroutput $type
-   
 }
 
 compile_revtex()
 {
-  pdflatex -shell-escape -file-line-error *.tex
-  bibtex  *.tex
-  pdflatex -shell-escape -file-line-error *.tex
+ program="/choice-TeX-file-latexmk.py"
+  type="revtex"
+  echo "$green This TeX files are availables in this directory"
+  python $scripts_path$program $dir $diroutput $type
 }
 
 #function to reduce size of pdf in build-user dir
@@ -104,7 +107,7 @@ if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "aoclxpf" option
+    while getopts "aoclxpfr" option
     do
         case $option in 
             a)
@@ -128,11 +131,12 @@ else
             p)
             reduce_size
             ;;
+            r)
+            compile_revtex
+            ;;
             *)  
             echo "You can select any option"
             exit ;;
         esac
     done
-
 fi
-

@@ -18,7 +18,6 @@ class style():
     UNDERLINE = '\033[4m'
     RESET = '\033[0m'
 
-
 path= (sys.argv[1])
 count=0
 listfiles = []
@@ -36,13 +35,13 @@ while True:
         sfile=int(sfile)
         fileselect=(listfiles[sfile])
     except ValueError:
-        print(style.RED+'¡Error! you can input a correct number file! ')
+        print(style.RED+'¡Error! you can input a correct number file! 😡')
         continue
     except IndexError:
-        print(style.RED+'¡Error! you can input a correct number file! ')
+        print(style.RED+'¡Error! you can input a correct number file! 😡')
         continue
     else:
-        print(style.GREEN+"you select: %s"%(fileselect))
+        print(style.GREEN+"you select: %s 😄"%(fileselect))
         break
 
 diroutput=(sys.argv[2])
@@ -57,6 +56,8 @@ for i,j in enumerate(listfiles):
         elif type=='figure':
             os.system("latexmk -pdflatex -pdf -e  '$max_repeat=1' -g -f -shell-escape  -outdir=%s  %s"%(diroutput,j))
         elif type=='general':
+             os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
+        elif type=='revtex':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         else:
             os.system("latexmk -auxdir=%s -bibtex -pdf-g  -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
