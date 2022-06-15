@@ -15,12 +15,12 @@ diroutput="build-$USER"
 for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
-    emoji='🗹'
+    emoji='😁'
     echo -e "$green Exists TeX files ${emoji} $endcolor";
     break
   else
-  emoji='🗶'
-    echo "$red Doesn't exist Tex files ${emoji} $endcolor"
+  emoji='😁'
+    echo "$red Doesn't exist Tex files $emoji $endcolor"
     exit 0 
   fi
 done
@@ -52,9 +52,10 @@ compile_option()
 
 compile_figure()
 {
-  echo -e "$lcyan \n\n\t\t compile figure from \n"
+  echo -e "$green compile figure from: $dir"
   type="figure"
   program="/choice-TeX-file-latexmk.py"
+  echo -e "$yellow"
   python $scripts_path$program $dir $diroutput $type
   
 }
@@ -89,6 +90,7 @@ reduce_size()
   program="reduce-pdf.py"
   cd "${dir}/$diroutput"
   new_dir=$(pwd)
+  echo -e "$yellow"
   python $scripts_path$program $new_dir
 }
 
