@@ -23,11 +23,9 @@ count=0
 listfiles = []
 for i in sorted(os.listdir(path)):
     if i.endswith('.tex'):
-        print(" %d --->  %s"%(count,i))
+        print("%d --->  %s"%(count,i),end='\n\n')
         listfiles.append(i)
         count+=1
-
-
 
 while True:
     sfile=input("Select TeX file to compile (number): ")
