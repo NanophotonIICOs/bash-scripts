@@ -23,7 +23,7 @@ count=0
 listfiles = []
 for i in sorted(os.listdir(path)):
     if i.endswith('.tex'):
-        print("%d --->  %s"%(count,i),end='\n\n')
+        print("%d --->  %s"%(count,i),end='\n')
         listfiles.append(i)
         count+=1
 
@@ -33,13 +33,13 @@ while True:
         sfile=int(sfile)
         fileselect=(listfiles[sfile])
     except ValueError:
-        print(style.RED+'¡Error! you can input a correct number file! 😡')
+        print(style.RED+'¡Error! You should input a correct number! 😡')
         continue
     except IndexError:
-        print(style.RED+'¡Error! you can input a correct number file! 😡')
+        print(style.RED+'¡Error! You should input a correct number! 😡')
         continue
     else:
-        print(style.GREEN+"you select: %s 😄"%(fileselect))
+        print(style.GREEN+"You select: %s 😄"%(fileselect))
         break
 
 diroutput=(sys.argv[2])
