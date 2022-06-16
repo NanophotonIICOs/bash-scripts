@@ -1,10 +1,9 @@
 import numpy as np
 import os
 import sys
-
+from tabulate import tabulate
 # System call
 os.system("")
-
 # Class of different styles
 class style():
     BLACK = '\033[30m'
@@ -20,15 +19,21 @@ class style():
 
 path= (sys.argv[1])
 count=0
+listfilestable = []
 listfiles = []
+
 for i in sorted(os.listdir(path)):
     if i.endswith('.tex'):
-        print("%d --->  %s"%(count,i),end='\n')
+        #print("%d --->  %s"%(count,i),end='\n')
+        listfilestable.append([count,i])
         listfiles.append(i)
         count+=1
 
+columns = ["No. File", "File Name"]
+print(tabulate(listfilestable, headers=columns, numalign="center",tablefmt="orgtbl"))
+        
 while True:
-    sfile=input("Select TeX file to compile (number): ")
+    sfile=input(style.GREEN+"\nSelect TeX file to compile (number): ")
     try:
         sfile=int(sfile)
         fileselect=(listfiles[sfile])
@@ -52,6 +57,7 @@ for i,j in enumerate(listfiles):
         elif type=='xelatex':
             os.system("latexmk -xelatex -pdf -e  '$max_repeat=2' -g -f -shell-escape  -auxdir=%s -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='figure':
+            os.system("echo  '\033[37m'")
             os.system("latexmk -pdflatex -pdf -e  '$max_repeat=1' -g -f -shell-escape  -outdir=%s  %s"%(diroutput,j))
         elif type=='general':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))

@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/python
 scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
 dir=$(pwd)
 cd $dir
@@ -34,8 +33,6 @@ else
     mkdir $diroutput
 fi
 
-
-
 # compile functions 
 simple_compile()
 {
@@ -57,7 +54,6 @@ compile_figure()
   program="/choice-TeX-file-latexmk.py"
   echo -e "$yellow"
   python $scripts_path$program $dir $diroutput $type
-  
 }
 
 compile_lualatex()
