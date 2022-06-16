@@ -8,5 +8,7 @@ This repo holds the bash scripts tools used in lflm's research group. The order 
 It's important that you add to your profile (.basrhc, .bash_profile, etc.) and 
 add this directory to the PATH. For example:
 
-- PATH=/home/user/bash-scripts/scripts:$PATH; export PATH
-- export scripts_root="/home/user/bash-scripts/scripts"
+```sh
+PATH=/home/user/bash-scripts/scripts:$PATH; export PATH
+export scripts_root="/home/user/bash-scripts/scripts"
+```
