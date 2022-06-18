@@ -36,7 +36,9 @@ fi
 # compile functions 
 simple_compile()
 {
-    latexmk -auxdir=$diroutput -bibtex -pdf -shell-escape -g -outdir=$diroutput 
+  program="/choice-TeX-file-latexmk.py"
+  type="simple"
+  python $scripts_path$program $dir $diroutput $type
 }
 
 compile_option()
