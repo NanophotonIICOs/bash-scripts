@@ -12,7 +12,6 @@ imagefiles=`ls -- *.png`
 i=0
 for f in  $imagefiles; do
     ((i=i+1))
-
     # to check if already remove image background, this contains wob string
     if [[ ${f%.*} == *"wob"* ]]; then
         echo -e "$red $f Already exist!"
