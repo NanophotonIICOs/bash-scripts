@@ -1,5 +1,7 @@
+from click import style
 import numpy as np
 import os,sys
+from tabulate import tabulate
 listextensions=[
 '*.aux',
 '*.lof',
@@ -110,18 +112,35 @@ listextensions=[
 '*.lpz'
 ]
 
+
+class style():
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    UNDERLINE = '\033[4m'
+    RESET = '\033[0m'
+
 path= (sys.argv[1])
 removedfiles=[]
 for i in os.listdir(path):
     for j in listextensions:
         if j.split('.')[-1] in i:
-            print('%s removed by ---> %s extension'%(i,j))
+            #print('%s removed by ---> %s extension'%(i,j))
             removedfiles.append(i)
-
-response=input("The above files will be deleted, you're sure? [Y]/n: ")
-if response=="Y" or response=="y":
-    for i in removedfiles:
-        print("Remove %s:"%i)
-        os.system("rm -R %s"%i)
-else:
+if not removedfiles:
+    print(style.RED+" Doesn't exist extra files to erase.... Bye!")
     exit
+else:
+    print(tabulate(removedfiles,headers=["File","Extension"]))
+    response=input("The above files will be deleted, you're sure? [Y]/n: ")
+    if response=="Y" or response=="y":
+        for i in removedfiles:
+            print("Remove %s:"%i)
+            os.system("rm -R %s"%i)
+    else:
+        exit
