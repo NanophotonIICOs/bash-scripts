@@ -5,7 +5,6 @@ import os,sys
 from sympy import im
 from tabulate import tabulate
 # System call
-os.system("")
 # Class of different styles
 class style():
     BLACK = '\033[30m'
@@ -42,7 +41,7 @@ for i,image in enumerate(sorted(os.listdir(path))):
             count+=1
         else:
             print(style.RED+"Doesn't exist any image 🙆")
-
+imfiles=sorted(imfiles)
 print(tabulate(imfiles,headers=["No. image","Image name"],numalign="center",tablefmt="orgtbl"))
 
 while True:
