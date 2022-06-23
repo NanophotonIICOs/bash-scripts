@@ -111,8 +111,7 @@ listextensions=[
 '*.sta',
 '*.lpz'
 ]
-
-
+os.system("")
 class style():
     BLACK = '\033[30m'
     RED = '\033[31m'
@@ -130,17 +129,18 @@ removedfiles=[]
 for i in os.listdir(path):
     for j in listextensions:
         if j.split('.')[-1] in i:
-            #print('%s removed by ---> %s extension'%(i,j))
-            removedfiles.append(i)
+            removedfiles.append(['.'+j.split('.')[-1],i])
+
+
 if not removedfiles:
     print(style.RED+" Doesn't exist extra files to erase.... Bye!")
     exit
 else:
-    print(tabulate(removedfiles,headers=["File","Extension"]))
-    response=input("The above files will be deleted, you're sure? [Y]/n: ")
+    print(style.YELLOW+tabulate(removedfiles,headers=["Extension","File"], numalign="center",tablefmt="orgtbl"))
+    response=input(style.RED+"The above files will be deleted, you're sure? [Y]/n: ")
     if response=="Y" or response=="y":
         for i in removedfiles:
-            print("Remove %s:"%i)
-            os.system("rm -R %s"%i)
+            print("Remove %s:"%i[1])
+            os.system("rm -R %s"%i[1])
     else:
         exit
