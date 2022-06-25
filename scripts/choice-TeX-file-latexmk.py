@@ -64,5 +64,5 @@ for i,j in enumerate(listfiles):
         elif type=='revtex':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         else:
-            os.system("latexmk -shell-escape -auxdir=%s -bibtex -pdf  -e '$max_repeat=1' -g -outdir=%s %s "%(diroutput,diroutput,j))
+            os.system("latexmk -shell-escape -auxdir=%s -bibtex -pdf  -e '$max_repeat=2' -g -outdir=%s %s "%(diroutput,diroutput,j))
 

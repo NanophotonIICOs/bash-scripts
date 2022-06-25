@@ -60,9 +60,18 @@ while(True):
 for i,j in enumerate(listfiles):
      if i==int(file):
          print("%s-%s.pdf"%(j.split('.')[0],today))
-         compath=cdircomplete+"/"+j.split('.')[0]+"-"+str(today)+".pdf"
-         os.system("gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=%s %s"%(compath,j))
-         print("Reduce %s ---> %s"%(j,compath))
-         os.remove(j)
+         while os.WIFSIGNALED:
+            print(style.BLUE+'Converting....')
+            try:
+                compath=cdircomplete+"/"+j.split('.')[0]+"-"+str(today)+".pdf"
+                os.system("gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=%s %s"%(compath,j))
+                print("Reduce %s ---> %s"%(j,compath))
+                os.remove(j)
+            except ValueError:
+                print(style.RED+"Error!")
+                break
+            else:
+                print(style.GREEN+'Finish!')
+                break
 
     
