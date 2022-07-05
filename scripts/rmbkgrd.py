@@ -18,6 +18,16 @@ class style():
     UNDERLINE = '\033[4m'
     RESET = '\033[0m'
 
+imextlist=['.png','.jpeg','jpg','.pdf']
+path= (sys.argv[1])
+
+def gif(path):
+    gif_files=[]
+    count=0
+    for i,image in enumerate(sorted(os.listdir(path))):
+        if image.endswith('.gif'):
+            print(image) 
+
 def images(path):
     imfiles=[]
     count=0
@@ -46,8 +56,7 @@ def images(path):
     return imfiles
 
 
-imextlist=['.png','.jpeg','jpg','.pdf']
-path= (sys.argv[1])
+
 while True:
     select = input(style.CYAN+'Press 1 to remove the background for a specific image in this dir or press 2 if you want to remove all  images background: ')
     try:
@@ -75,7 +84,7 @@ if sel==2:
                 for i in imfiles:
                     imext = i[1].split('.')[-1]
                     imname =  i[1].split('.')[0]
-                    os.system("convert %s -fuzz 10 -transparent White %s.%s"%(i[1],imname,imext)) 
+                    os.system("convert %s  -fuzz 20%% -transparent white %s.%s"%(i[1],imname,imext)) 
                     print(style.YELLOW+"%s"%(i[1]),end="\r")
             except ValueError:
                 print(style.RED+"Error!")
@@ -108,7 +117,7 @@ elif sel==1:
     while os.WIFSIGNALED:
         print(style.BLUE+'Converting....')
         try:
-            os.system("convert %s -fuzz 10 -transparent White %s.%s"%(imageselect,imname,imext)) 
+            os.system("convert %s -fuzz 20%% -transparent white %s.%s"%(imageselect,imname,imext)) 
         except ValueError:
             print(style.RED+"Error!")
             break
