@@ -92,6 +92,15 @@ reduce_size()
   python $scripts_path$program $new_dir
 }
 
+remove_background()
+{
+  program="rmbkgrd.py"
+  cd "${dir}/figures"
+  new_dir=$(pwd)
+  echo -e "$yellow"
+  python $scripts_path$program $new_dir
+}
+
 clean_aux()
 {
   code="clean.py"
@@ -130,6 +139,9 @@ else
             ;;
             p)
             reduce_size
+            ;;
+            b)
+            remove_background
             ;;
             r)
             compile_revtex
