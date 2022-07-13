@@ -58,11 +58,11 @@ for i,j in enumerate(listfiles):
             os.system("latexmk -xelatex -pdf -e  '$max_repeat=2' -g -f -shell-escape  -auxdir=%s -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='figure':
             os.system("echo  '\033[37m'")
-            os.system("latexmk -shell-escape -pdflatex -pdf -e  '$max_repeat=1' -g -f -auxdir=%s  -outdir=%s  %s"%(diroutput,diroutput,j))
+            os.system("latexmk -shell-escape -pdflatex -pdf   -g -f -auxdir=%s  -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='general':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         elif type=='revtex':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         else:
-            os.system("latexmk -shell-escape -auxdir=%s -bibtex -pdf  -e '$max_repeat=1' -g -f -outdir=%s %s "%(diroutput,diroutput,j))
+            os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
 
