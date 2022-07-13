@@ -18,7 +18,7 @@ class style():
     UNDERLINE = '\033[4m'
     RESET = '\033[0m'
 
-imextlist=['.png','.jpeg','jpg','.pdf']
+imextlist=['.png','.jpeg','jpg','.pdf','.eps']
 path= (sys.argv[1])
 
 def gif(path):
@@ -46,6 +46,9 @@ def images(path):
                 imfiles.append([count,image]) 
                 count+=1
             elif image.endswith('.pdf'):
+                imfiles.append([count,image])
+                count+=1
+            elif image.endswith('.eps'):
                 imfiles.append([count,image])
                 count+=1
             else:
@@ -84,6 +87,10 @@ if sel==2:
                 for i in imfiles:
                     imext = i[1].split('.')[-1]
                     imname =  i[1].split('.')[0]
+                    if imext=="jpg" or imext=="jpeg":
+                        imext="png"
+                    else:
+                        pass
                     os.system("convert %s  -fuzz 20%% -transparent white %s.%s"%(i[1],imname,imext)) 
                     print(style.YELLOW+"%s"%(i[1]),end="\r")
             except ValueError:
@@ -113,6 +120,11 @@ elif sel==1:
             break
 
     imext = imageselect.split('.')[-1]
+    if imext=="jpg" or imext=="jpeg":
+        imext="png"
+    elif imext=="eps":
+        imext="pdf" 
+                    
     imname =  imageselect.split('.')[0]
     while os.WIFSIGNALED:
         print(style.BLUE+'Converting....')
