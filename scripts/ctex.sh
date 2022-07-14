@@ -15,11 +15,11 @@ for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
     emoji='😁'
-    echo -e "$green Exists TeX files ${emoji} $endcolor";
+    echo  ${green} Exists TeX files ${emoji} 
     break
   else
   emoji='😁'
-    echo "$red Doesn't exist Tex files $emoji $endcolor"
+    echo $red "Doesn't" exist Tex files $emoji $endcolor
     exit 0 
   fi
 done
