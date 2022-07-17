@@ -110,17 +110,31 @@ clean_aux()
   python $scripts_path$code $new_dir 
 }
 
+compile_asy()
+{
+ program="/choice-TeX-file-latexmk.py"
+  type="asy"
+  echo "$green This TeX files are availables in this directory"
+  python $scripts_path$program $dir $diroutput $type
+}
+
 # after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
 else
-    while getopts "aoclxpfr" option
+    while getopts "aoclxpfry" option
     do
         case $option in 
             a)
-            simple_compile 
+            compile_asy 
+            ;;
+            b)
+            remove_background
+            ;;
+            c)
+            clean_aux
             ;;
             f)
             compile_figure 
@@ -131,20 +145,17 @@ else
             o)
             compile_option 
             ;;
-            c)
-            clean_aux
-            ;;
             x)
             compile_with_xetex
             ;;
             p)
             reduce_size
             ;;
-            b)
-            remove_background
-            ;;
             r)
             compile_revtex
+            ;;
+            s)
+            simple_compile
             ;;
             *)  
             echo "You can select any option"

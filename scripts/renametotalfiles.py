@@ -4,7 +4,7 @@ import glob as glob
 import sys
 from tabulate import tabulate
 
-os.system("")
+#os.system("")
 # Class of different styles
 class style():
     BLACK = '\033[30m'
@@ -22,16 +22,21 @@ tfiles= []
 for files in os.listdir(os.getcwd()):
     if files in files.lower():
         if " " in files:
-            print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>}'.format("This contains spaces, watch out!"))
+            print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>10}'.format("This contains spaces, watch out!"))
             print()
         else:
             stra = 'already be lower case!'
-            print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>}'.format(stra))
+            print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>10}'.format(stra))
         pass
     elif " " in files:
         r = files.replace(" ","").lower()
-        print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>}'.format("This contains spaces, watch out!"))
+        print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>10}'.format("This contains spaces, watch out!"))
         tfiles.append([files,r.lower()])
+    else:
+        r = files.lower()
+        print(style.CYAN+'{:<28}'.format(files)+ style.RED+'---> ' + style.YELLOW+'{:>10}'.format(r))
+        tfiles.append([files,r.lower()])
+
 
 
 if not tfiles:
