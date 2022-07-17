@@ -60,9 +60,11 @@ for i,j in enumerate(listfiles):
             os.system("echo  '\033[37m'")
             os.system("latexmk -shell-escape -pdflatex -pdf   -g -f -auxdir=%s  -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='general':
-             os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
+             os.system("latexmk -auxdir=%s -bibtex -pdf -g -f -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         elif type=='revtex':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
+        if type=='asy':
+            os.system("latexmk  -pdf -g -f -auxdir=%s  -outdir=%s %s"%(diroutput,diroutput,j))
         else:
-            os.system("latexmk -auxdir=%s -bibtex -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
+            os.system("latexmk -auxdir=%s -bibtex -pdf -g -f -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
 
