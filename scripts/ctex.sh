@@ -101,6 +101,8 @@ remove_background()
   python $scripts_path$program $new_dir
 }
 
+
+
 clean_aux()
 {
   code="clean.py"
