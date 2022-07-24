@@ -10,6 +10,7 @@ yellow=$'\e[1;33m'
 endcolor=$'\e[0m'
 user=$USER
 diroutput="build-$USER"
+
 #check if exists tex file
 for file in ./*.tex
 do 
