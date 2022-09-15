@@ -22,7 +22,16 @@ gif_compile()
     dir=$(pwd)
     cd $dir
     program="rmbkgrd-g.py"
-    python $scripts_path$program  $dir
+    type="pdf"
+    python $scripts_path$program  $dir $type
+}
+gif_to_png()
+{
+    dir=$(pwd)
+    cd $dir
+    type="png"
+    program="rmbkgrd-g.py"
+    python $scripts_path$program  $dir $type
 }
 
 if [ $# -eq 0 ]; then
@@ -34,6 +43,9 @@ else
         case $option in 
             g)
             gif_compile 
+            ;;
+            p)
+            gif_to_png
             ;;
             *)  
             echo "You can select any option"

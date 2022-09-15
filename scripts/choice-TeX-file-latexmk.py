@@ -53,12 +53,12 @@ type=(sys.argv[3])
 for i,j in enumerate(listfiles):
     if i==sfile:
         if type=='lualatex':
-            os.system("latexmk  -lualatex -auxdir=%s -e -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
+            os.system("latexmk -lualatex -auxdir=%s -e '$max_repeat=0' -pdf -g -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         elif type=='xelatex':
             os.system("latexmk -xelatex -pdf -e  '$max_repeat=2' -g -f -shell-escape  -auxdir=%s -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='figure':
             os.system("echo  '\033[37m'")
-            os.system("latexmk -shell-escape -pdflatex -pdf   -g -f -auxdir=%s  -outdir=%s  %s"%(diroutput,diroutput,j))
+            os.system("latexmk -shell-escape -pdflatex -pdf -g -e  '$max_repeat=0' -f -auxdir=%s  -outdir=%s  %s"%(diroutput,diroutput,j))
         elif type=='general':
              os.system("latexmk -auxdir=%s -bibtex -pdf -g -f -shell-escape -outdir=%s %s"%(diroutput,diroutput,j))
         elif type=='revtex':

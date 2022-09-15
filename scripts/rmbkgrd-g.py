@@ -20,7 +20,7 @@ class style():
 
 imextlist=['.png','.jpeg','jpg','.pdf']
 path= (sys.argv[1])
-
+ctype=(sys.argv[2])
 
 
 def images(path):
@@ -58,22 +58,25 @@ while True:
 
 imext = imageselect.split('.')[-1]
 imname =  imageselect.split('.')[0]
-# outdirname=imname+'-out'
-# if os.path.exists(outdirname) :
-#     print ("The path already exist...")
-# else:
-#     os.system("mkdir %s"%(outdirname))
-#     print(style.MAGENTA+'%s was created!'%(outdirname))
+if ctype=="png":
+    outdirname=imname+'-out'
+    if os.path.exists(outdirname) :
+        print ("The path already exist...")
+    else:
+        os.system("mkdir %s"%(outdirname))
+        print(style.MAGENTA+'%s was created!'%(outdirname))
  
 while os.WIFSIGNALED:
     print(style.BLUE+'Converting....')
     try:
-        # os.system("convert %s        \
-        #           -coalesce                \
-        #         -quality 100\
-        #         -transparent none \
-        #          %s/%s.png"%(imageselect,outdirname,imname)) 
-        os.system("convert %s -coalesce  -fuzz 20%% -transparent white %s.pdf"%(imageselect,imname)) 
+        if ctype =="png":
+            os.system("convert %s  \
+                    -coalesce      \
+                    -quality 100   \
+                    -fuzz 20%% -transparent white \
+                    %s/%s.png"%(imageselect,outdirname,imname)) 
+        else:
+            os.system("convert %s -coalesce   -fuzz 20%% -transparent white %s.pdf"%(imageselect,imname)) 
     except ValueError:
         print(style.RED+"Error!")
         break
