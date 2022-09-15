@@ -31,7 +31,7 @@ then
     echo "$lcyan Directory ${dir}/$diroutput exists.${endcolor}" 
 else
     echo "$lcyan Should be create $diroutput dir"&&
-    mkdir $diroutput
+    mkdir -m 777 $diroutput
 fi
 
 # compile functions 
@@ -52,18 +52,15 @@ compile_option()
 
 compile_figure()
 {
-  echo -e "$green compile figure from: $dir"
-  type="figure"
   program="/choice-TeX-file-latexmk.py"
-  echo -e "$yellow"
+  type="figure"
   python $scripts_path$program $dir $diroutput $type
 }
 
 compile_lualatex()
 {
-  echo -e "$lcyan \n\n\t\t compile figure from \n"
-  type="lualatex"
   program="/choice-TeX-file-latexmk.py"
+  type="lualatex"
   python $scripts_path$program $dir $diroutput $type
 }
 
@@ -113,7 +110,7 @@ clean_aux()
 
 compile_asy()
 {
- program="/choice-TeX-file-latexmk.py"
+  program="/choice-TeX-file-latexmk.py"
   type="asy"
   echo "$green This TeX files are availables in this directory"
   python $scripts_path$program $dir $diroutput $type
