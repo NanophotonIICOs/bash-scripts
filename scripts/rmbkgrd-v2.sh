@@ -1,4 +1,3 @@
-#!/bin/bash
 green=$'\e[1;32m'
 red=$'\e[0;31m'
 blue=$'\e[0;34m'
@@ -8,33 +7,14 @@ endcolor=$'\e[0m'
 
 simple_compile()
 {
-    dir=$(pwd)
-    cd $dir
-    program="rmbkgrd.py"
-    python $scripts_path$program $dir
-}
-
-gif_compile()
-{
-    dir=$(pwd)
-    cd $dir
-    program="rmbkgrd-g.py"
-    type="pdf"
-    python $scripts_path$program  $dir $type
-}
-gif_to_png()
-{
-    dir=$(pwd)
-    cd $dir
-    type="png"
-    program="rmbkgrd-g.py"
-    python $scripts_path$program  $dir $type
+    program="rmbkgrd-v2.py"
+    python $scripts_path$program
 }
 
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
-elsesen
+else
     while getopts "gp" option
     do
         case $option in 
