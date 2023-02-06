@@ -1,6 +1,6 @@
 #!/bin/bash
 # now it's important to define scripts path
-scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path='/media/rbnfiles/ruco/repos/bash-scripts/scripts/'
 dir=$(pwd)
 cd $dir
 
@@ -15,7 +15,6 @@ diroutput="build-$USER"
 # run python script
 
 printf "$green \n Run rename files script...\n\n"
-
 
 
 simple_compile()

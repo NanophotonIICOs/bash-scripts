@@ -1,5 +1,5 @@
 #!/bin/bash
-scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path='/media/rbnfiles/ruco/repos/bash-scripts/scripts/'
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
@@ -39,7 +39,7 @@ simple_compile()
 {
   program="/choice-TeX-file-latexmk.py"
   type="simple"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 compile_option()
@@ -47,21 +47,21 @@ compile_option()
   program="/choice-TeX-file-latexmk.py"
   type="general"
   echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 compile_figure()
 {
   program="/choice-TeX-file-latexmk.py"
   type="figure"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 compile_lualatex()
 {
   program="/choice-TeX-file-latexmk.py"
   type="lualatex"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 compile_with_xetex()
@@ -69,7 +69,7 @@ compile_with_xetex()
  echo -e "$lcyan \n\n\t\t compile figure from \n"
     type="xelatex"
     program="/choice-TeX-file-latexmk.py"
-    python $scripts_path$program $dir $diroutput $type
+    python $scripts_root$program $dir $diroutput $type
 }
 
 compile_revtex()
@@ -77,7 +77,7 @@ compile_revtex()
  program="/choice-TeX-file-latexmk.py"
   type="revtex"
   echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 #function to reduce size of pdf in build-user dir
@@ -87,7 +87,7 @@ reduce_size()
   cd "${dir}/$diroutput"
   new_dir=$(pwd)
   echo -e "$yellow"
-  python $scripts_path$program $new_dir
+  python $scripts_root$program $new_dir
 }
 
 remove_background()
@@ -96,7 +96,7 @@ remove_background()
   cd "${dir}/figures"
   new_dir=$(pwd)
   echo -e "$yellow"
-  python $scripts_path$program $new_dir
+  python $scripts_root$program $new_dir
 }
 
 clean_aux()
@@ -105,7 +105,7 @@ clean_aux()
   dir=$(pwd)
   cd "${dir}/$diroutput" 
   new_dir=$(pwd)
-  python $scripts_path$code $new_dir 
+  python $scripts_root$code $new_dir 
 }
 
 compile_asy()
@@ -113,7 +113,7 @@ compile_asy()
   program="/choice-TeX-file-latexmk.py"
   type="asy"
   echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput $type
+  python $scripts_root$program $dir $diroutput $type
 }
 
 # after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag

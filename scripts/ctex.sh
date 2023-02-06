@@ -1,5 +1,5 @@
 #!/bin/sh
-scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path='/media/rbnfiles/ruco/repos/bash-scripts/scripts/utils'
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
@@ -36,14 +36,14 @@ fi
 # compile functions 
 simple_compile()
 {
-  program="/choice-TeX-file-latexmk.py"
+  program="/select-TeX-file-latexmk.py"
   type="simple"
   python $scripts_path$program $dir $diroutput $type
 }
 
 compile_option()
 {
-  program="/choice-TeX-file-latexmk.py"
+  program="/select-TeX-file-latexmk.py"
   type="general"
   echo "$green This TeX files are availables in this directory"
   python $scripts_path$program $dir $diroutput $type
@@ -53,7 +53,7 @@ compile_figure()
 {
   echo -e "$green compile figure from: $dir"
   type="figure"
-  program="/choice-TeX-file-latexmk.py"
+  program="/select-TeX-file-latexmk.py"
   echo -e "$yellow"
   python $scripts_path$program $dir $diroutput $type
 }
@@ -62,7 +62,7 @@ compile_lualatex()
 {
   echo -e "$lcyan \n\n\t\t compile figure from \n"
   type="lualatex"
-  program="/choice-TeX-file-latexmk.py"
+  program="/select-TeX-file-latexmk.py"
   python $scripts_path$program $dir $diroutput $type
 }
 
@@ -70,13 +70,13 @@ compile_with_xetex()
 {
  echo -e "$lcyan \n\n\t\t compile figure from \n"
     type="xelatex"
-    program="/choice-TeX-file-latexmk.py"
+    program="/select-TeX-file-latexmk.py"
     python $scripts_path$program $dir $diroutput $type
 }
 
 compile_revtex()
 {
- program="/choice-TeX-file-latexmk.py"
+ program="/select-TeX-file-latexmk.py"
   type="revtex"
   echo "$green This TeX files are availables in this directory"
   python $scripts_path$program $dir $diroutput $type
