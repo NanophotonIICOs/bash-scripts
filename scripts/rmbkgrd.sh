@@ -6,6 +6,7 @@ lcyan=$'\e[1;36m'
 yellow=$'\e[1;33m'
 endcolor=$'\e[0m'
 
+scripts_path=$scripts_path
 simple_compile()
 {
     dir=$(pwd)
