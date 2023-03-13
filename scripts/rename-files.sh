@@ -1,6 +1,6 @@
 #!/bin/bash
 # now it's important to define scripts path
-scripts_path='/media/rbnfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path=$scripts_utils
 dir=$(pwd)
 cd $dir
 
