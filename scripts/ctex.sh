@@ -1,5 +1,5 @@
 #!/bin/sh
-scripts_path='/media/rbnfiles/ruco/repos/bash-scripts/scripts/utils'
+scripts_path=$scripts_utils
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
