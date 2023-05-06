@@ -10,13 +10,12 @@ This repo holds the bash scripts tools used in lflm's research group. The order 
     For this command, there's no need for the file name as an argument, shows the list of **TeX** files for possible compilation, then the user put the number of file. Finally, the script creates a build folder, adding the user name to this <span style="color:blue"><strong>(build-user)</strong></span>.
 - The <span style="color:green"><strong>rename-files.sh</strong></span> script rename files in the current dir, but in lowercase.
 
-
-
-It's important that you add to your profile (.basrhc, .bash_profile, etc.) and 
-add this directory to the PATH. For example:
+It's important that you add to your profile (.basrhc, .bash_profile, etc.) the enviroment variables:
 
 ```sh
-PATH=/home/username/bash-scripts/scripts:$PATH; export PATH
-export scripts_root="/home/username/bash-scripts/scripts"
+PATH=/path/to/bash-scripts/scripts:$PATH; export PATH
+export scripts_root="/path/to/bash-scripts/scripts"
+export scripts_utils="/path/to/bash-scripts/scripts/utils"
+
 ```
-replace the username with yours.
+replace that for your PATH.
