@@ -1,5 +1,5 @@
 #!/bin/sh
-scripts_path=$scripts_utils
+scripts_path=$scripts_path
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
