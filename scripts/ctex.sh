@@ -19,7 +19,7 @@ do
     break
   else
   emoji='😁'
-    echo $red "Doesn't" exist Tex files $emoji $endcolor
+    echo "$red Doesn't exist Tex files $emoji $endcolor"
     exit 0 
   fi
 done
@@ -154,3 +154,6 @@ else
         esac
     done
 fi
+
+
+
