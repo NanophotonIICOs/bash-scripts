@@ -35,7 +35,7 @@ gif_to_png()
 if [ $# -eq 0 ]; then
     simple_compile # run usage function
     exit 1
-elsesen
+else
     while getopts "gp" option
     do
         case $option in 
