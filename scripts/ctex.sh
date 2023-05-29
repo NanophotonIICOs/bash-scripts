@@ -2,12 +2,12 @@
 scripts_path=$scripts_path
 dir=$(pwd)
 cd $dir
-green=$'\e[1;32m'
-red=$'\e[0;31m'
-blue=$'\e[0;34m'
-lcyan=$'\e[1;36m'
-yellow=$'\e[1;33m'
-endcolor=$'\e[0m'
+green='\e[1;32m'
+red='\e[0;31m'
+blue='\e[0;34m'
+lcyan='\e[1;36m'
+yellow='\e[1;33m'
+endcolor='\e[0m'
 user=$USER
 diroutput="build-$USER"
 #check if exists tex file
@@ -15,7 +15,7 @@ for file in ./*.tex
 do 
   if [ -f "${file}" ]; then
     emoji='😁'
-    echo  ${green} Exists TeX files ${emoji} 
+    echo  "${green} Exists TeX files ${emoji}"
     break
   else
   emoji='😁'
