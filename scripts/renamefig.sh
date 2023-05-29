@@ -1,6 +1,6 @@
 #!/bin/bash
 #!/bin/python
-scripts_path='/media/labfiles/ruco/repos/bash-scripts/scripts/'
+scripts_path=$scripts_utils
 dir=$(pwd)
 cd $dir
 green=$'\e[1;32m'
