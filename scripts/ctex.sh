@@ -9,6 +9,7 @@ lcyan='\e[1;36m'
 yellow='\e[1;33m'
 endcolor='\e[0m'
 user=$USER
+
 diroutput="build-$USER"
 #check if exists tex file
 for file in ./*.tex
@@ -24,6 +25,8 @@ do
   fi
 done
 
+
+
 # first check if $diroutput dir exists
 if [ -d "${dir}/$diroutput" ] 
 then
@@ -32,6 +35,7 @@ else
     echo "$lcyan Should be create $diroutput dir"&&
     mkdir $diroutput
 fi
+
 
 # compile functions 
 simple_compile()
