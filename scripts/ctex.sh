@@ -62,9 +62,10 @@ compile_figure()
   python $scripts_path$program $dir $diroutput $type
 }
 
+
 compile_lualatex()
 {
-  echo -e "$lcyan \n\n\t\t compile figure from \n"
+  echo -e "$lcyan compile figure from \n"
   type="lualatex"
   program="/select-TeX-file-latexmk.py"
   python $scripts_path$program $dir $diroutput $type
