@@ -73,7 +73,7 @@ compile_lualatex()
 
 compile_with_xetex()
 {
- echo -e "$lcyan \n\n\t\t compile figure from \n"
+ echo -e "$lcyan  compile figure from \n"
     type="xelatex"
     program="/select-TeX-file-latexmk.py"
     python $scripts_path$program $dir $diroutput $type
