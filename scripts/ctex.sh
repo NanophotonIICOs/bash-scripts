@@ -65,7 +65,7 @@ compile_figure()
 
 compile_lualatex()
 {
-  echo -e "$lcyan compile figure from \n"
+  echo -e "$lcyan compile figure from "
   type="lualatex"
   program="/select-TeX-file-latexmk.py"
   python $scripts_path$program $dir $diroutput $type
@@ -73,7 +73,7 @@ compile_lualatex()
 
 compile_with_xetex()
 {
- echo -e "$lcyan  compile figure from \n"
+ echo -e "$lcyan  compile figure from "
     type="xelatex"
     program="/select-TeX-file-latexmk.py"
     python $scripts_path$program $dir $diroutput $type
@@ -96,6 +96,7 @@ reduce_size()
   echo -e "$yellow"
   python $scripts_path$program $new_dir
 }
+
 
 remove_background()
 {
