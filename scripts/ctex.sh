@@ -111,11 +111,11 @@ remove_background()
 
 clean_aux()
 {
-  code="clean.py"
+  program="/clean.py"
   dir=$(pwd)
   cd "${dir}/$diroutput" 
   new_dir=$(pwd)
-  python $scripts_path$code $new_dir 
+  python $scripts_path$program $new_dir 
 }
 
 # after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
