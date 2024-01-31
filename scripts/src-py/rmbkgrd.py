@@ -2,7 +2,6 @@ from lib2to3.pytree import convert
 from matplotlib import image
 import numpy as np
 import os,sys
-from sympy import im
 from tabulate import tabulate
 # System call
 # Class of different styles
