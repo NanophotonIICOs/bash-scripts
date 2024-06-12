@@ -1,4 +1,4 @@
-from lib2to3.pytree import convert
+# from lib2to3.pytree import convert
 from matplotlib import image
 import numpy as np
 import os,sys
@@ -22,6 +22,8 @@ imextlist=['.png','.jpeg','jpg','.pdf']
 path= (sys.argv[1])
 ctype=(sys.argv[2])
 
+rem_wback = False
+     
 
 def images(path):
     imfiles=[]
@@ -70,13 +72,23 @@ while os.WIFSIGNALED:
     print(style.BLUE+'Converting....')
     try:
         if ctype =="png":
-            os.system("convert %s  \
-                    -coalesce      \
-                    -quality 100   \
-                    -fuzz 20%% -transparent white \
-                    %s/%s.png"%(imageselect,outdirname,imname)) 
+            if rem_wback:
+                os.system("convert %s  \
+                        -coalesce      \
+                        -quality 100   \
+                        -fuzz 20%% -transparent white \
+                        %s/%s.png"%(imageselect,outdirname,imname)) 
+            else:
+                os.system("convert %s  \
+                        -coalesce      \
+                        -quality 100   \
+                        -fuzz 20%%  \
+                        %s/%s.png"%(imageselect,outdirname,imname)) 
         else:
-            os.system("convert %s -coalesce   -fuzz 20%% -transparent white %s.pdf"%(imageselect,imname)) 
+            if rem_wback:
+                os.system("convert %s -coalesce   -fuzz 20%% -transparent white %s.pdf"%(imageselect,imname))
+            else:
+                os.system("convert %s -coalesce   -fuzz 20%%  %s.pdf"%(imageselect,imname))
     except ValueError:
         print(style.RED+"Error!")
         break

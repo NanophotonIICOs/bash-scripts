@@ -22,8 +22,15 @@ gif_compile()
     cd $dir
     program="rmbkgrd-g.py"
     type="pdf"
-    python $scripts_path$program  $dir $type
+    echo "Remove White Background?[y/n]"
+    read rem_white
+    if [ "$rem_white" = "y" ]; then
+        python $scripts_path$program $dir $type True
+    else
+        python $scripts_path$program $dir $type False
+    fi
 }
+
 gif_to_png()
 {
     dir=$(pwd)
