@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+
+# Paths and colors
 scripts_path=$scripts_root
 dir=$(pwd)
-cd $dir
 green='\e[1;32m'
 red='\e[0;31m'
 blue='\e[0;34m'
@@ -9,157 +10,108 @@ lcyan='\e[1;36m'
 yellow='\e[1;33m'
 endcolor='\e[0m'
 user=$USER
-
 diroutput="build-$USER"
-#check if exists tex file
-for file in ./*.tex
-do 
-  if [ -f "${file}" ]; then
-    emoji='😁'
-    echo  "${green} Exists TeX files ${emoji}"
-    break
-  else
-  emoji='😁'
-    echo "$red Doesn't exist Tex files $emoji $endcolor"
-    exit 0 
-  fi
-done
 
-
-
-# first check if $diroutput dir exists
-if [ -d "${dir}/$diroutput" ] 
-then
-    echo "$lcyan Directory ${dir}/$diroutput exists.${endcolor}" 
+# Check if there are .tex files in the current directory
+if ls *.tex 1> /dev/null 2>&1; then
+  echo -e "${green}Exists TeX files 😁${endcolor}"
 else
-    echo "$lcyan Should be create $diroutput dir"&&
-    mkdir $diroutput
+  echo -e "${red}Doesn't exist TeX files 😡${endcolor}"
+  exit 1
 fi
 
+# Check if the output directory exists, if not create it
+if [ -d "${dir}/$diroutput" ]; then
+  echo -e "${lcyan}Directory ${dir}/$diroutput exists.${endcolor}"
+else
+  echo -e "${lcyan}Creating directory $diroutput${endcolor}"
+  mkdir -p "$diroutput"
+fi
 
-# compile functions 
-simple_compile()
-{
-  program="/select-TeX-file-latexmk.py"
-  type="simple"
-  python $scripts_path$program $dir $diroutput $type
+# Compile functions
+simple_compile() {
+  local program="/select-TeX-file-latexmk.py"
+  local type="simple"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
-compile_option()
-{
-  program="/select-TeX-file-latexmk.py"
-  type="general"
-  echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput $type
+compile_option() {
+  local program="/select-TeX-file-latexmk.py"
+  local type="general"
+  echo -e "$green This TeX files are available in this directory"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
-compile_figure()
-{
-  echo -e "$green compile figure from: $dir"
-  type="figure"
-  program="/select-TeX-file-latexmk.py"
+compile_figure() {
+  echo -e "$green Compile figure from: $dir"
+  local type="figure"
+  local program="/select-TeX-file-latexmk.py"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
+}
+
+compile_lualatex() {
+  echo -e "$lcyan LuaLaTeX"
+  local type="lualatex"
+  local program="/select-TeX-file-latexmk.py"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
+}
+
+compile_with_xetex() {
+  echo -e "$lcyan Compile with XeLaTeX"
+  local type="xelatex"
+  local program="/select-TeX-file-latexmk.py"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
+}
+
+compile_revtex() {
+  local program="/select-TeX-file-latexmk.py"
+  local type="revtex"
+  echo -e "$green This TeX files are available in this directory"
+  python "$scripts_path$program" "$dir" "$diroutput" "$type"
+}
+
+# Function to reduce the size of PDF in build-user dir
+reduce_size() {
+  local program="reduce-pdf.py"
+  cd "${dir}/$diroutput" || exit
+  local new_dir=$(pwd)
   echo -e "$yellow"
-  python $scripts_path$program $dir $diroutput $type
+  python "$scripts_path$program" "$new_dir"
 }
 
-
-compile_lualatex()
-{
-  echo -e "$lcyan compile figure from "
-  type="lualatex"
-  program="/select-TeX-file-latexmk.py"
-  python $scripts_path$program $dir $diroutput $type
-}
-
-compile_with_xetex()
-{
- echo -e "$lcyan  compile figure from "
-    type="xelatex"
-    program="/select-TeX-file-latexmk.py"
-    python $scripts_path$program $dir $diroutput $type
-}
-
-compile_revtex()
-{
- program="/select-TeX-file-latexmk.py"
-  type="revtex"
-  echo "$green This TeX files are availables in this directory"
-  python $scripts_path$program $dir $diroutput $type
-}
-
-#function to reduce size of pdf in build-user dir
-reduce_size()
-{
-  program="reduce-pdf.py"
-  cd "${dir}/$diroutput"
-  new_dir=$(pwd)
+remove_background() {
+  local program="rmbkgrd.py"
+  cd "${dir}/figures" || exit
+  local new_dir=$(pwd)
   echo -e "$yellow"
-  python $scripts_path$program $new_dir
+  python "$scripts_path$program" "$new_dir"
 }
 
-
-remove_background()
-{
-  program="rmbkgrd.py"
-  cd "${dir}/figures"
-  new_dir=$(pwd)
-  echo -e "$yellow"
-  python $scripts_path$program $new_dir
+clean_aux() {
+  local program="/clean.py"
+  cd "${dir}/$diroutput" || exit
+  local new_dir=$(pwd)
+  python "$scripts_path$program" "$new_dir"
 }
 
-
-
-clean_aux()
-{
-  program="/clean.py"
-  dir=$(pwd)
-  cd "${dir}/$diroutput" 
-  new_dir=$(pwd)
-  python $scripts_path$program $new_dir 
-}
-
-# after each compilation, it's removed auxiliary files, if you don't need this, uses -a flag
-
+# Main script execution
 if [ $# -eq 0 ]; then
-    simple_compile # run usage function
-    exit 1
+  simple_compile # Run usage function
+  exit 1
 else
-    while getopts "aoclxpfr" option
-    do
-        case $option in 
-            a)
-            simple_compile 
-            ;;
-            f)
-            compile_figure 
-            ;;
-            l)
-            compile_lualatex
-            ;;
-            o)
-            compile_option 
-            ;;
-            c)
-            clean_aux
-            ;;
-            x)
-            compile_with_xetex
-            ;;
-            p)
-            reduce_size
-            ;;
-            b)
-            remove_background
-            ;;
-            r)
-            compile_revtex
-            ;;
-            *)  
-            echo "You can select any option"
-            exit ;;
-        esac
-    done
+  while getopts "aoclxpfr" option; do
+    case $option in
+      a) simple_compile ;;
+      f) compile_figure ;;
+      l) compile_lualatex ;;
+      o) compile_option ;;
+      c) clean_aux ;;
+      x) compile_with_xetex ;;
+      p) reduce_size ;;
+      b) remove_background ;;
+      r) compile_revtex ;;
+      *) echo "Invalid option. Use -a, -o, -c, -l, -x, -p, -f, -r, -b."
+         exit 1 ;;
+    esac
+  done
 fi
-
-
-
