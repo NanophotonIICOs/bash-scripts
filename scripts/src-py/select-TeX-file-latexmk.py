@@ -65,7 +65,7 @@ latexmk_commands = {
 }
 
 # Default command if the type is not recognized
-command = latexmk_commands.get(type, f"latexmk -auxdir={diroutput} -bibtex -pdf -g -f -shell-escape -outdir={diroutput} {fileselect}")
+command = latexmk_commands.get(type, f"latexmk -auxdir={diroutput} -bibtex -pdf -g -f  -shell-escape -outdir={diroutput} {fileselect}")
 
 # Run the command
 os.system(command)

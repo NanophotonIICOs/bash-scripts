@@ -31,33 +31,33 @@ fi
 # Compile functions
 simple_compile() {
   local program="/select-TeX-file-latexmk.py"
-  local type="simple"
+  local type="general"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
-compile_option() {
+compile_general() {
   local program="/select-TeX-file-latexmk.py"
   local type="general"
-  echo -e "$green This TeX files are available in this directory"
+  echo  "$green This TeX files are available in this directory"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
 compile_figure() {
-  echo -e "$green Compile figure from: $dir"
+  echo  "$green Compile figure from: $dir"
   local type="figure"
   local program="/select-TeX-file-latexmk.py"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
 compile_lualatex() {
-  echo -e "$lcyan LuaLaTeX"
+  echo  -e "$lcyan LuaLaTeX"
   local type="lualatex"
   local program="/select-TeX-file-latexmk.py"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
 compile_with_xetex() {
-  echo -e "$lcyan Compile with XeLaTeX"
+  echo  "$lcyan Compile with XeLaTeX"
   local type="xelatex"
   local program="/select-TeX-file-latexmk.py"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
@@ -66,7 +66,7 @@ compile_with_xetex() {
 compile_revtex() {
   local program="/select-TeX-file-latexmk.py"
   local type="revtex"
-  echo -e "$green This TeX files are available in this directory"
+  echo  "$green This TeX files are available in this directory"
   python "$scripts_path$program" "$dir" "$diroutput" "$type"
 }
 
@@ -75,7 +75,6 @@ reduce_size() {
   local program="reduce-pdf.py"
   cd "${dir}/$diroutput" || exit
   local new_dir=$(pwd)
-  echo -e "$yellow"
   python "$scripts_path$program" "$new_dir"
 }
 
@@ -99,19 +98,49 @@ if [ $# -eq 0 ]; then
   simple_compile # Run usage function
   exit 1
 else
-  while getopts "aoclxpfr" option; do
-    case $option in
-      a) simple_compile ;;
-      f) compile_figure ;;
-      l) compile_lualatex ;;
-      o) compile_option ;;
-      c) clean_aux ;;
-      x) compile_with_xetex ;;
-      p) reduce_size ;;
-      b) remove_background ;;
-      r) compile_revtex ;;
-      *) echo "Invalid option. Use -a, -o, -c, -l, -x, -p, -f, -r, -b."
-         exit 1 ;;
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -a|--all)
+      simple_compile
+      shift
+      ;;
+      -f|--figure)
+      compile_figure
+      shift
+      ;;
+      -l|--lualatex)
+      compile_lualatex
+      shift
+      ;;
+      -g|--general)
+      compile_general
+      shift
+      ;;
+      -c|--clean)
+      clean_aux
+      shift
+      ;;
+      -x|--xelatex)
+      compile_with_xetex
+      shift
+      ;;
+      -p|--pdfsize)
+      reduce_size
+      shift
+      ;;
+      -b|--rembg)
+      remove_background
+      shift
+      ;;
+      -r|--revtex)
+      compile_revtex
+      shift
+      ;;
+      *)
+      echo -e "${red}Invalid option: $1${endcolor}"
+      echo "Usage: $0 [-a|--all] [-f|--figure] [-l|--lualatex] [-g|--general] [-c|--clean] [-x|--xelatex] [-p|--pdfsize] [-b|--rembg] [-r|--revtex]"
+      exit 1
+      ;;
     esac
   done
 fi
