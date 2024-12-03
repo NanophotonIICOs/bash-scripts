@@ -128,7 +128,7 @@ path= (sys.argv[1])
 removedfiles=[]
 for i in os.listdir(path):
     for j in listextensions:
-        if j.split('.')[-1] in i:
+        if j.split('.')[-1] in i.split('.')[-1]:
             removedfiles.append(['.'+j.split('.')[-1],i])
 
 
